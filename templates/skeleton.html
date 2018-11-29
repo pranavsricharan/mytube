@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="has-navbar-fixed-top">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Home{% endblock %} - MyTube</title>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+</head>
+
+<body>
+    <div id="nav" class="navbar is-dark is-fixed-top">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                <span class="has-background-primary is-size-7" style="padding: 3px 8px; margin-right: 0.25rem; border-radius: 0.3rem;"><i
+                        class="fas fa-play"></i></span><span class="subtitle has-text-white">MyTube</span>
+            </a>
+
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+
+                <!-- <a class=" navbar-item" href="/">Recent</a>
+                <a class="navbar-item" href="/">Popular</a> -->
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input class="input" type="text" placeholder="Search">
+                        </div>
+                        <div class="control">
+                            <button class="button is-light">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                <a href="{% url 'video:add' %}" class="navbar-item">
+                    <span class="icon is-small" style="margin-right: 0.5rem"><i class="fas fa-upload"></i></span>
+                    Upload
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a href="#" class="navbar-link">
+                        <figure class="image is-32x32" style="margin-right: 0.5rem;">
+                            <img class="is-rounded" src="https://via.placeholder.com/32" style="max-height: none;">
+                        </figure>
+                    </a>
+                    <div class="navbar-dropdown is-right">
+                        <div class="navbar-item">
+                            <div class="columns is-multiline">
+                                <div class="column is-12">
+                                    <figure class="image is-128x128" style="margin: auto;">
+                                        <img class="is-rounded" src="https://via.placeholder.com/128" style="max-height: none;">
+                                    </figure>
+                                </div>
+                                <div class="column is-12 has-text-centered">
+                                    <div class="subtitle is-marginless">Pranav Sricharan</div>
+                                    <span class="has-text-primary">{{ user.videos.count }} videos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="navbar-divider" />
+                        <a class="navbar-item">
+                            Account
+                        </a>
+                        <a class="navbar-item">
+                            Settings
+                        </a>
+                        <hr class="navbar-divider" />
+                        <a href="{% url 'account:logout' %}" class="navbar-item">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+
+                {% else %}
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a href="{% url 'account:login' %}" class="button is-primary">Login</a>
+                        <a href="{% url 'account:register' %}" class="button is-white is-outlined">Register</a>
+                    </div>
+                </div>
+
+                {% endif %}
+            </div>
+
+        </div>
+        <!-- <router-link to="/">Home</router-link> |
+                <router-link to="/about">About</router-link> -->
+    </div>
+
+    {% block body %}{% endblock %}
+
+</body>
+
+</html>

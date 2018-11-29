@@ -1,0 +1,55 @@
+{% load widget_tweaks %}
+
+{% for hidden in form.hidden_fields %}
+{{ hidden }}
+{% endfor %}
+{% if form.non_field_errors %}
+<div class="box is-size-7" style="margin-bottom: 1rem;">
+    <span class="has-text-weight-semibold">The following errors were found:</span>
+    <ul>
+        {% for error in form.non_field_errors %}
+        <li class="has-text-danger">{{ error }}</li>
+
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% for field in form.visible_fields %}
+<div class="field">
+    <label class="label" for="{{ field.id_for_label }}">{{ field.label }} {{field.field.widget.input_type}}</label>
+    <div class="control">
+        {% if field.field.widget.input_type == "select" %}
+        <div class="select is-fullwidth">
+            {{ field}}
+        </div>
+        {% elif field.field.widget.input_type == "file" %}
+        <div class="file has-name is-fullwidth">
+            <label class="file-label">
+                <input id="{{ field.id_for_label }}" {% if field.field.required %}required{% endif %} name="{{ field.name }}"
+                    class="file-input {% if field.errors %}is-invalid{% endif %}" type="{{ field.field.widget.input_type }}"
+                    onchange="if (this.files.length > 0) document.getElementById('{{ field.id_for_label }}-name').innerHTML = this.files[0].name;">
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        Choose a file
+                    </span>
+                </span>
+                <span class="file-name" id="{{ field.id_for_label }}-name">
+                    No file chosen
+                </span>
+            </label>
+        </div>
+
+        {% elif field.field.widget.input_type == "text" %}
+        {{ field|add_class:'input' }}
+        {% else %}
+        {{ field|add_class:'textarea' }}
+        {% endif %}
+    </div>
+    {% for error in field.errors %}
+    <p class="help is-danger">{{ error }}</span>
+        {% endfor %}
+</div>
+{% endfor %}

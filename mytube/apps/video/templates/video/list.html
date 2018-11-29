@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="container is-fluid">
+    <div class="subtitle">Recently Uploaded</div>
+    <div class="columns is-multiline">
+        {% for video in videos %}
+        <div class="column is-3">
+            <img src="https://via.placeholder.com/320x180" />
+            <div>
+                <a href="{% url 'video:watch' video.id %}" class="has-text-black">
+                    <h1 class="is-size-6 has-text-weight-semibold">{{ video.title }}</h1>
+                </a>
+                <div class="is-size-7 has-text-primary">{{ video.user.username }}</div>
+                <div class="is-size-7 has-text-grey level">
+                    <span class="level-left">
+                        <span class="level-item">
+                            {{ video.created|naturaltime }}
+                        </span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item">
+                            {{ video.views }} views
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

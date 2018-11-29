@@ -1,0 +1,30 @@
+{% extends 'skeleton.html' %}
+
+{% block body %}
+<div class="columns has-background-black is-centered">
+    <div class="column has-text-centered is-paddingless">
+        <video controls="" style="height: 80vh;">
+            <source src="{{ video.video_file.url }}" type="video/mp4" />
+            Your browser does not support HTML5
+        </video>
+    </div>
+</div>
+<section class="section container is-fluid" style="padding-top: 0.5rem;">
+    <div class="columns">
+        <div class="column is-9">
+            <h1 class="subtitle is-size-4">
+                {{ video.title }}
+            </h1>
+            <div class="level">
+                <div class="level-left">{{ video.views }} views</div>
+                <div class="level-right"></div>
+            </div>
+        </div>
+        <div class="column is-3">
+            <div class="subtitle">
+                Related videos
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

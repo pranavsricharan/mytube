@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock title %}
+{% block content %}
+<form method="POST" class="column is-half">
+    {% csrf_token %}
+    {% include 'form_template.html' with form=form %}
+    <p class="control has-text-right">
+        <button class="button is-link" type="submit">Register</button>
+    </p>
+</form>
+{% endblock %}
