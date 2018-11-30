@@ -1,5 +1,5 @@
 {% extends 'skeleton.html' %}
-
+{% load video_extras %}
 {% block title %}{{ video.title }}{% endblock %}
 {% block body %}
 <div class="columns has-background-black is-centered">
@@ -22,7 +22,9 @@
             </div>
             <hr />
             <div>
-                {{ video.description|linebreaksbr}}
+                {% with description=video.description|format_text|safe %}
+                {{ description|linebreaksbr}}
+                {% endwith %}
             </div>
         </div>
         <div class="column is-3">

@@ -1,6 +1,9 @@
 from django import template
 from datetime import timedelta
+import re
 
+
+URL_PATTERN = re.compile(r'(https?://[^\s]+)')
 register = template.Library()
 
 
@@ -11,3 +14,8 @@ def get_duration(seconds):
         formatted_duration = formatted_duration[1:]
 
     return formatted_duration
+
+
+@register.filter(name='format_text')
+def format_text(text):
+    return URL_PATTERN.sub(r'<a href="\1" target="_blank">\1</a>', text)
