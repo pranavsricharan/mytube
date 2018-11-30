@@ -3,15 +3,14 @@
 
 {% block title %}Upload{% endblock %}
 {% block content %}
-<div class="container is-fluid">
-    <div class="subtitle">Add new video</div>
-    <form method="POST" class="column is-half" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% include 'form_template.html' with form=form %}
-        <p class="control has-text-right">
-            <button class="button is-link" type="submit">Upload</button>
-        </p>
-    </form>
-</div>
+<div class="subtitle">Add new video</div>
+<form method="POST" class="column is-half" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'form_template.html' with form=form %}
+    <p class="control has-text-right">
+        <button class="button is-link" type="submit">Upload</button>
+    </p>
+</form>
+
 
 {% endblock %}

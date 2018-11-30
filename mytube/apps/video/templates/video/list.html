@@ -1,45 +1,42 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% block content %}
-<section class="section">
+<div class="container is-fluid">
+    <div class="subtitle">Recently Uploaded</div>
+    <div class="columns is-multiline">
+        {% for video in videos %}
+        <div class="column is-3">
+            <a href="{% url 'video:watch' video.id %}" class="has-text-black">
 
-    <div class="container is-fluid">
-        <div class="subtitle">Recently Uploaded</div>
-        <div class="columns is-multiline">
-            {% for video in videos %}
-            <div class="column is-3">
+                {% if video.preview_thumb %}
+                <img src="{{ video.preview_thumb.url }}" />
+                {% else %}
+                <img src="https://via.placeholder.com/320x180" />
+                {% endif %}
+            </a>
+            <div>
                 <a href="{% url 'video:watch' video.id %}" class="has-text-black">
-
-                    {% if video.preview_thumb %}
-                    <img src="{{ video.preview_thumb.url }}" />
-                    {% else %}
-                    <img src="https://via.placeholder.com/320x180" />
-                    {% endif %}
+                    <h1 class="is-size-6 ">{{ video.title }}</h1>
                 </a>
-                <div>
-                    <a href="{% url 'video:watch' video.id %}" class="has-text-black">
-                        <h1 class="is-size-6 ">{{ video.title }}</h1>
-                    </a>
-                    <a href="{% url 'video:channel' video.user.username %}" class="is-size-7 has-text-primary">
-                        {{video.user.username }}</a>
-                    <div class="is-size-7 has-text-grey level">
-                        <span class="level-left">
-                            <span class="level-item">
-                                {{ video.created|naturaltime }}
-                            </span>
+                <a href="{% url 'video:channel' video.user.username %}" class="is-size-7 has-text-primary">
+                    {{video.user.username }}</a>
+                <div class="is-size-7 has-text-grey level">
+                    <span class="level-left">
+                        <span class="level-item">
+                            {{ video.created|naturaltime }}
                         </span>
-                        <span class="level-right">
-                            <span class="level-item">
-                                {{ video.views }} views
-                            </span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item">
+                            {{ video.views }} views
                         </span>
-                    </div>
+                    </span>
                 </div>
             </div>
-
-            {% endfor %}
         </div>
+
+        {% endfor %}
     </div>
-</section>
+</div>
 
 {% endblock %}

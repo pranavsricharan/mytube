@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_no_padding.html' %}
 {% load humanize %}
 {% block title %}Videos of {{ channel_user.username }}{% endblock %}
 {% block content %}
@@ -39,7 +39,7 @@
             </a>
             <div>
                 <a href="{% url 'video:watch' video.id %}" class="has-text-black">
-                    <h1 class="is-size-6 has-text-weight-semibold">{{ video.title }}</h1>
+                    <h1 class="is-size-6">{{ video.title }}</h1>
                 </a>
                 <div class="is-size-7 has-text-primary">{{ video.user.username }}</div>
                 <div class="is-size-7 has-text-grey level">
