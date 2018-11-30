@@ -36,6 +36,14 @@ class VideoDetailView(DetailView):
     model = Video
     template_name = 'video/watch.html'
 
+    def get_object(self, queryset=None):
+        video_object: Video = super(
+            VideoDetailView, self).get_object(queryset=queryset)
+        video_object.increment_view_count()
+        video_object.save()
+        video_object.refresh_from_db()
+        return video_object
+
 
 class AddVideoView(CreateView):
     model = Video
