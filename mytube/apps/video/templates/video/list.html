@@ -1,22 +1,29 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load video_extras %}
 {% block content %}
 <div class="container is-fluid">
     <div class="subtitle">Recently Uploaded</div>
     <div class="columns is-multiline">
         {% for video in videos %}
         <div class="column is-3">
-            <a href="{% url 'video:watch' video.id %}" class="has-text-black">
+            <div class="video-list-thumb">
+                <a href="{% url 'video:watch' video.id %}" class="has-text-black">
 
-                {% if video.preview_thumb %}
-                <img src="{{ video.preview_thumb.url }}" />
-                {% else %}
-                <img src="https://via.placeholder.com/320x180" />
-                {% endif %}
-            </a>
+                    {% if video.preview_thumb %}
+                    <img src="{{ video.preview_thumb.url }}" />
+                    {% else %}
+                    <img src="https://via.placeholder.com/320x180" />
+                    {% endif %}
+                </a>
+
+                <div class="video-thumb-duration">
+                    {% get_duration video.duration %}
+                </div>
+            </div>
             <div>
                 <a href="{% url 'video:watch' video.id %}" class="has-text-black">
-                    <h1 class="is-size-6 ">{{ video.title }}</h1>
+                    <h3 class="video-list-title" title="{{ video.title }}">{{ video.title |truncatechars:60 }}</h3>
                 </a>
                 <a href="{% url 'video:channel' video.user.username %}" class="is-size-7 has-text-primary">
                     {{video.user.username }}</a>

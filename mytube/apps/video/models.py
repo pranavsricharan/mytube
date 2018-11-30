@@ -56,6 +56,9 @@ class Video(models.Model):
         User, on_delete=models.CASCADE, related_name='videos')
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def increment_view_count(self):
         self.views = models.F('views') + 1
 

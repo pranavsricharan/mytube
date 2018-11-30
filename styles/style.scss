@@ -43,3 +43,23 @@ body {
 .menu-label {
     padding: 0 0.75rem;
 }
+
+.video-list-title {
+    line-height: 1;
+    font-size: 0.9rem;
+}
+
+.video-list-thumb {
+    position: relative;
+}
+
+.video-thumb-duration {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    padding: 0.05rem 0.25rem;
+    font-size: $size-7;
+    background: rgba(0, 0, 0, 0.7);
+    color: $white;
+    border-radius: $radius-small;
+}
