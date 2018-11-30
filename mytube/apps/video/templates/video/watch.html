@@ -1,5 +1,6 @@
 {% extends 'skeleton.html' %}
 
+{% block title %}{{ video.title }}{% endblock %}
 {% block body %}
 <div class="columns has-background-black is-centered">
     <div class="column has-text-centered is-paddingless">
@@ -18,6 +19,10 @@
             <div class="level">
                 <div class="level-left">{{ video.views }} views</div>
                 <div class="level-right"></div>
+            </div>
+            <hr />
+            <div>
+                {{ video.description|linebreaksbr}}
             </div>
         </div>
         <div class="column is-3">

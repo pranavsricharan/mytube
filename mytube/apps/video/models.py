@@ -6,18 +6,25 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-def video_upload_to(video: models.Model, filename: str) -> str:
-    video.original_file_name = filename
-
+def get_bucket() -> str:
     number_str: str = str(int(time()) % 100)
     bucket: str = md5(number_str.encode()).hexdigest()
+    return bucket
+
+
+def video_upload_to(video: models.Model, filename: str) -> str:
+    video.original_file_name = filename
 
     if '.' not in filename:
         ext = 'mp4'
     else:
         ext = filename[filename.rfind('.') + 1:]
 
-    return 'uploads/{}/{}.{}'.format(bucket, str(uuid.uuid4()), ext)
+    return 'uploads/{}/{}.{}'.format(get_bucket(), str(uuid.uuid4()), ext)
+
+
+def thumb_upload_to(video: models.Model, filename: str) -> str:
+    return 'thumbs/{}/{}.jpg'.format(get_bucket(), video.id)
 
 
 class Video(models.Model):
@@ -38,8 +45,16 @@ class Video(models.Model):
 
     visibility = models.CharField(
         max_length=8, default='PUBLIC', choices=VISIBILITY)
+
+    duration = models.IntegerField(null=True, blank=True)
     views = models.IntegerField(default=0)
+
+    preview_thumb = models.FileField(
+        null=True, blank=True, upload_to=thumb_upload_to)
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='videos')
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '<{}> {}'.format(self.id, self.title)

@@ -6,7 +6,11 @@
     <div class="columns is-multiline">
         {% for video in videos %}
         <div class="column is-3">
+            {% if video.preview_thumb %}
+            <img src="{{ video.preview_thumb.url }}" />
+            {% else %}
             <img src="https://via.placeholder.com/320x180" />
+            {% endif %}
             <div>
                 <a href="{% url 'video:watch' video.id %}" class="has-text-black">
                     <h1 class="is-size-6 has-text-weight-semibold">{{ video.title }}</h1>
