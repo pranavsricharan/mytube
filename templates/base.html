@@ -1,53 +1,50 @@
 {% extends 'skeleton.html' %}
 
 {% block body %}
-<section class="section">
-    <div class="columns">
+<div class="columns" style="min-height: 100%;">
+    <div class="column is-2 section pl-small pr-0 has-background-light">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li>
+                    <a class="is-active">
+                        <span class="icon">
+                            <i class="fas fa-home"></i>
+                        </span> Home
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <span class="icon">
+                            <i class="fas fa-clock"></i>
+                        </span> Recently Uploaded
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <span class="icon">
+                            <i class="fas fa-star"></i>
+                        </span> Popular
+                    </a>
+                </li>
+            </ul>
+            <p class="menu-label">
+                Subscriptions
+            </p>
+            {% if user.is_authenticated %}
+            <div class="column is-size-7 has-text-centered">
+                No subscriptions yet
+            </div>
+            {% else %}
+            <div class="column is-size-6 has-text-centered">
+                <a href="{% url 'account:login' %}">Login</a> to manage subscriptions
+            </div>
+            {% endif %}
 
-        <div class="column is-2">
-            <aside class="menu">
-                <ul class="menu-list">
-                    <li>
-                        <a class="is-active">
-                            <span class="icon">
-                                <i class="fas fa-home"></i>
-                            </span> Home
-                        </a>
-                    </li>
-                    <li>
-                        <a>
-                            <span class="icon">
-                                <i class="fas fa-clock"></i>
-                            </span> Recently Uploaded
-                        </a>
-                    </li>
-                    <li>
-                        <a>
-                            <span class="icon">
-                                <i class="fas fa-star"></i>
-                            </span> Popular
-                        </a>
-                    </li>
-                </ul>
-                <p class="menu-label">
-                    Subscriptions
-                </p>
-                {% if user.is_authenticated %}
-                <div class="is-size-7 has-text-centered">
-                    No subscriptions yet
-                </div>
-                {% else %}
-                <div class="is-size-6 has-text-centered">
-                    <a href="{% url 'account:login' %}">Login</a> to manage subscriptions
-                </div>
-                {% endif %}
-
-            </aside>
-        </div>
-        <div class="column is-10">
-            {% block content %}{% endblock %}
-
-        </div>
+        </aside>
     </div>
-</section>
+    <div class="column is-10 pl-0">
+        {% block content %}{% endblock %}
+
+    </div>
+</div>
 {% endblock %}

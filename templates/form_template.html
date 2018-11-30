@@ -16,7 +16,7 @@
 {% endif %}
 {% for field in form.visible_fields %}
 <div class="field">
-    <label class="label" for="{{ field.id_for_label }}">{{ field.label }} {{field.field.widget.input_type}}</label>
+    <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
     <div class="control">
         {% if field.field.widget.input_type == "select" %}
         <div class="select is-fullwidth">
@@ -42,7 +42,7 @@
             </label>
         </div>
 
-        {% elif field.field.widget.input_type == "text" %}
+        {% elif field.field.widget.input_type == "text" or field.field.widget.input_type == "password"%}
         {{ field|add_class:'input' }}
         {% else %}
         {{ field|add_class:'textarea' }}

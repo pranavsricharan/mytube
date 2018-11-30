@@ -3,3 +3,43 @@ $primary: #e6744f;
 
 @import './bulma/bulma.sass';
 @import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
+
+.vspace {
+    width: 100%;
+    height: 1rem;
+}
+
+.pt {
+    &-0 {
+        padding-top: 0 !important;
+    }
+}
+
+.pl {
+    &-0 {
+        padding-left: 0 !important;
+    }
+
+    &-small {
+        padding-left: 0.75rem !important;
+    }
+}
+
+.pr {
+    &-0 {
+        padding-right: 0 !important;
+    }
+
+    &-small {
+        padding-right: 0.75rem !important;
+    }
+}
+
+
+body {
+    height: calc(100vh - 2.5rem);
+}
+
+.menu-label {
+    padding: 0 0.75rem;
+}

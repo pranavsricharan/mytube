@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Videos of {{ channel_user.username }}{% endblock %}
+{% block content %}
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image is-128x128" style="margin: auto;">
+                        <img class="is-rounded" src="https://via.placeholder.com/128" style="max-height: none;">
+                    </figure>
+                </div>
+
+                <div class="column">
+                    <h1 class="title">
+                        {{ channel_user.username }}
+                    </h1>
+                    <h2 class="subtitle">
+                        {{ videos.count }} videos
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="section">
+    <div class="vspace"></div>
+    <div class="columns is-multiline">
+        {% for video in videos %}
+        <div class="column is-3">
+            <a href="{% url 'video:watch' video.id %}" class="has-text-black">
+
+                {% if video.preview_thumb %}
+                <img src="{{ video.preview_thumb.url }}" />
+                {% else %}
+                <img src="https://via.placeholder.com/320x180" />
+                {% endif %}
+            </a>
+            <div>
+                <a href="{% url 'video:watch' video.id %}" class="has-text-black">
+                    <h1 class="is-size-6 has-text-weight-semibold">{{ video.title }}</h1>
+                </a>
+                <div class="is-size-7 has-text-primary">{{ video.user.username }}</div>
+                <div class="is-size-7 has-text-grey level">
+                    <span class="level-left">
+                        <span class="level-item">
+                            {{ video.created|naturaltime }}
+                        </span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item">
+                            {{ video.views }} views
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
