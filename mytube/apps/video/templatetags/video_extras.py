@@ -9,11 +9,14 @@ register = template.Library()
 
 @register.simple_tag
 def get_duration(seconds):
-    formatted_duration = str(timedelta(0, seconds))
-    while formatted_duration[0] in ['0', ':']:
-        formatted_duration = formatted_duration[1:]
+    try:
+        formatted_duration = str(timedelta(0, seconds))
+        while formatted_duration[0] in ['0', ':']:
+            formatted_duration = formatted_duration[1:]
 
-    return formatted_duration
+        return formatted_duration
+    except:
+        return '--:--'
 
 
 @register.filter(name='format_text')

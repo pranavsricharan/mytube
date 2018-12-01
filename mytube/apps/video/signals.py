@@ -2,11 +2,13 @@ from tempfile import TemporaryDirectory
 from os import system
 from random import randint
 
+from PIL import Image
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.files import File
 
 from .models import Video
+from .helpers import crop_to_aspect
 
 
 @receiver(post_save, sender=Video)
@@ -28,6 +30,10 @@ def create_preview_thumb(sender, instance, created, **kwargs):
 
             system('ffmpeg -i "{0}" -an -y -ss 00:00:{1} -f mjpeg -vframes 1 "{2}/thumb.jpg"'.format(
                 instance.video_file.path, random_frame, temp_dir))
+
+            image: Image.Image = Image.open(temp_dir + '/thumb.jpg')
+            image = crop_to_aspect(image, 16/9)
+            image.save(temp_dir + '/thumb.jpg', 'JPEG')
 
             with open(temp_dir + '/thumb.jpg', 'rb') as f:
                 django_file = File(f)

@@ -8954,6 +8954,20 @@ label.panel-block:hover {
   height: 1rem;
 }
 
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mb-small {
+  margin-bottom: 0.25rem !important;
+}
+.mb-normal {
+  margin-bottom: 0.5rem !important;
+}
+
 .pt-0 {
   padding-top: 0 !important;
 }
