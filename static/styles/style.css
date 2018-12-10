@@ -8957,6 +8957,15 @@ label.panel-block:hover {
 .mt-0 {
   margin-top: 0 !important;
 }
+.mt-small {
+  margin-top: 0.25rem !important;
+}
+.mt-normal {
+  margin-top: 0.5rem !important;
+}
+.mt-medium {
+  margin-top: 1rem !important;
+}
 
 .mb-0 {
   margin-bottom: 0 !important;
@@ -9010,6 +9019,17 @@ body {
   padding: 0.05rem 0.25rem;
   font-size: 0.75rem;
   background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 2px;
+}
+
+.video-thumb-tag-unlisted {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  padding: 0.05rem 0.25rem;
+  font-size: 0.75rem;
+  background: #ffdd57;
   color: white;
   border-radius: 2px;
 }

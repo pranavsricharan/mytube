@@ -13,6 +13,18 @@ $primary: #e6744f;
     &-0 {
         margin-top: 0 !important;
     }
+
+    &-small {
+        margin-top: 0.25rem !important;
+    }
+
+    &-normal {
+        margin-top: 0.5rem !important;
+    }
+
+    &-medium {
+        margin-top: 1rem !important;
+    }
 }
 
 .mb {
@@ -80,6 +92,18 @@ body {
     padding: 0.05rem 0.25rem;
     font-size: $size-7;
     background: rgba(0, 0, 0, 0.7);
+    color: $white;
+    border-radius: $radius-small;
+}
+
+
+.video-thumb-tag-unlisted {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    padding: 0.05rem 0.25rem;
+    font-size: $size-7;
+    background: $warning;
     color: $white;
     border-radius: $radius-small;
 }

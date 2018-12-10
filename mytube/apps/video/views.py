@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 
-from .models import Video
+from .models import Video, Comment
 
 
 def index(*args, **kwargs):
@@ -39,9 +39,10 @@ class VideoDetailView(DetailView):
     def get_object(self, queryset=None):
         video_object: Video = super(
             VideoDetailView, self).get_object(queryset=queryset)
-        video_object.increment_view_count()
-        video_object.save()
-        video_object.refresh_from_db()
+        if self.request.method == 'GET':
+            video_object.increment_view_count()
+            video_object.save()
+            video_object.refresh_from_db()
         return video_object
 
 
@@ -88,3 +89,20 @@ class UserVideoListView(ListView):
             UserVideoListView, self).get_context_data(*args, **kwargs)
         context_data['channel_user'] = self.user
         return context_data
+
+
+class AddCommentView(CreateView):
+    model = Comment
+    template_name = 'video/add_comment.html'
+    fields = ['text']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        self.video = get_object_or_404(Video, id=self.kwargs.get('pk'))
+        form.instance.video = self.video
+        form.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('video:watch', args=(self.video.pk,))
