@@ -9023,15 +9023,21 @@ body {
   border-radius: 2px;
 }
 
-.video-thumb-tag-unlisted {
+.video-thumb-tag {
   position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
+  top: 0.75rem;
+  left: 0.75rem;
   padding: 0.05rem 0.25rem;
   font-size: 0.75rem;
-  background: #ffdd57;
-  color: white;
   border-radius: 2px;
+  opacity: 0.8;
+  color: #0a0a0a;
+}
+.video-thumb-tag-unlisted {
+  background: #ffdd57;
+}
+.video-thumb-tag-private {
+  background: #ff3860;
 }
 
 /*# sourceMappingURL=style.css.map */

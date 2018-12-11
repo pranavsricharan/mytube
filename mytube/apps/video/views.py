@@ -1,6 +1,6 @@
 import datetime
 
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import render, reverse, get_object_or_404, Http404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -41,6 +41,9 @@ class VideoDetailView(DetailView):
     def get_object(self, queryset=None):
         video_object: Video = super(
             VideoDetailView, self).get_object(queryset=queryset)
+
+        if video_object.visibility == 'PRIVATE' and video_object.user.id != self.request.user.id:
+            raise Http404
 
         # Increment video view count and reload object
         video_object.increment_view_count()

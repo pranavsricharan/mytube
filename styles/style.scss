@@ -97,13 +97,21 @@ body {
 }
 
 
-.video-thumb-tag-unlisted {
+.video-thumb-tag {
     position: absolute;
-    bottom: 0.75rem;
-    right: 0.75rem;
+    top: 0.75rem;
+    left: 0.75rem;
     padding: 0.05rem 0.25rem;
     font-size: $size-7;
-    background: $warning;
-    color: $white;
     border-radius: $radius-small;
+    opacity: 0.8;
+    color: $black;
+    
+    &-unlisted {
+        background: $warning;
+    }
+
+    &-private {
+        background: $danger;
+    }
 }

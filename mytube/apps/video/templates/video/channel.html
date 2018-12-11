@@ -43,6 +43,17 @@
                 <div class="video-thumb-duration">
                     {% get_duration video.duration %}
                 </div>
+                {% if video.visibility == "UNLISTED" %}
+                <div class="video-thumb-tag video-thumb-tag-unlisted">
+                    Unlisted
+                </div>
+                {% endif %}
+
+                {% if video.visibility == "PRIVATE" %}
+                <div class="video-thumb-tag video-thumb-tag-private">
+                    Private
+                </div>
+                {% endif %}
             </div>
             <div>
                 <a href="{% url 'video:watch' video.id %}" class="has-text-black">
