@@ -73,3 +73,17 @@ class Comment(models.Model):
     text = models.TextField()
 
     created = models.DateTimeField(auto_now_add=True)
+
+
+class History(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(
+        Video, on_delete=models.CASCADE)
+    watched_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-watched_time']
+        verbose_name_plural = 'history entries'
+
+    def __str__(self):
+        return '{} - {}'.format(self.user.username, self.video.id)

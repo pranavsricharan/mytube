@@ -1,10 +1,12 @@
+import datetime
+
 from django.shortcuts import render, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 
-from .models import Video, Comment
+from .models import Video, Comment, History
 
 
 def index(*args, **kwargs):
@@ -39,10 +41,24 @@ class VideoDetailView(DetailView):
     def get_object(self, queryset=None):
         video_object: Video = super(
             VideoDetailView, self).get_object(queryset=queryset)
-        if self.request.method == 'GET':
-            video_object.increment_view_count()
-            video_object.save()
-            video_object.refresh_from_db()
+
+        # Increment video view count and reload object
+        video_object.increment_view_count()
+        video_object.save()
+        video_object.refresh_from_db()
+
+        # Create new entry in user history
+        try:
+            print('*' * 100)
+            print(type(video_object))
+            user_last_viewed_video: History = History.objects.get(
+                user=self.request.user, video=video_object)
+            user_last_viewed_video.watched_time = datetime.datetime.now()
+            user_last_viewed_video.save()
+        except:
+            import traceback
+            traceback.print_exc()
+            History(user=self.request.user, video=video_object).save()
         return video_object
 
 
@@ -106,3 +122,20 @@ class AddCommentView(CreateView):
 
     def get_success_url(self):
         return reverse('video:watch', args=(self.video.pk,))
+
+
+class HistoryListView(ListView):
+    '''
+    List the most recent public videos
+    '''
+
+    model = History
+    template_name = 'video/history.html'
+    context_object_name = 'entries'
+
+    def get_queryset(self):
+        '''
+        Custom queryset to fetch user's history
+        '''
+
+        return self.model.objects.filter(user=self.request.user)
