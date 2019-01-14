@@ -45,23 +45,24 @@ class VideoDetailView(DetailView):
         if video_object.visibility == 'PRIVATE' and video_object.user.id != self.request.user.id:
             raise Http404
 
-        # Increment video view count and reload object
-        video_object.increment_view_count()
-        video_object.save()
-        video_object.refresh_from_db()
+        if self.request.user.is_authenticated:
+            # Increment video view count and reload object
+            video_object.increment_view_count()
+            video_object.save()
+            video_object.refresh_from_db()
 
-        # Create new entry in user history
-        try:
-            print('*' * 100)
-            print(type(video_object))
-            user_last_viewed_video: History = History.objects.get(
-                user=self.request.user, video=video_object)
-            user_last_viewed_video.watched_time = datetime.datetime.now()
-            user_last_viewed_video.save()
-        except:
-            import traceback
-            traceback.print_exc()
-            History(user=self.request.user, video=video_object).save()
+            # Create new entry in user history
+            try:
+                print('*' * 100)
+                print(type(video_object))
+                user_last_viewed_video: History = History.objects.get(
+                    user=self.request.user, video=video_object)
+                user_last_viewed_video.watched_time = datetime.datetime.now()
+                user_last_viewed_video.save()
+            except:
+                import traceback
+                traceback.print_exc()
+                History(user=self.request.user, video=video_object).save()
         return video_object
 
 
