@@ -51,6 +51,7 @@
 
             <div class="mt-medium">
                 <h3 class="is-size-5 has-font-style-bold">Comments ({{ video.comments.count }})</h3>
+                {% if user.is_authenticated %}
                 <article class="media mt-small mb-small">
                     <figure class="media-left">
                         <p class="image is-64x64">
@@ -76,6 +77,12 @@
                         </form>
                     </div>
                 </article>
+                {% else %}
+                <div class="has-text-centered mt-medium mb-medium">
+                    <h3>Login to write a comment</h3>
+                    <a href="{% url 'account:login' %}" class="button is-info">Login</a>
+                </div>
+                {% endif %}
                 {% if video.comments.count > 0 %}
                     {% for comment in video.comments.all %}
                     <article class="media">

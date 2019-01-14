@@ -1,10 +1,12 @@
 import datetime
 
 from django.shortcuts import render, reverse, get_object_or_404, Http404
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Video, Comment, History
 
@@ -66,7 +68,8 @@ class VideoDetailView(DetailView):
         return video_object
 
 
-class AddVideoView(CreateView):
+class AddVideoView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('account:login')
     model = Video
     template_name = 'video/add.html'
     fields = ['title', 'video_file', 'visibility', 'description']
@@ -111,7 +114,8 @@ class UserVideoListView(ListView):
         return context_data
 
 
-class AddCommentView(CreateView):
+class AddCommentView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('account:login')
     model = Comment
     template_name = 'video/add_comment.html'
     fields = ['text']
@@ -128,11 +132,12 @@ class AddCommentView(CreateView):
         return reverse('video:watch', args=(self.video.pk,))
 
 
-class HistoryListView(ListView):
+class HistoryListView(LoginRequiredMixin, ListView):
     '''
     List the most recent public videos
     '''
 
+    login_url = reverse_lazy('account:login')
     model = History
     template_name = 'video/history.html'
     context_object_name = 'entries'
