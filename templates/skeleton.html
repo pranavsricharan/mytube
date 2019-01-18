@@ -11,11 +11,13 @@
 </head>
 
 <body>
-    <div id="nav" class="navbar is-dark is-fixed-top">
+    <div id="nav" class="navbar is-primary is-fixed-top">
         <div class="navbar-brand">
             <a href="/" class="navbar-item">
-                <span class="has-background-primary is-size-7" style="padding: 3px 8px; margin-right: 0.25rem; border-radius: 0.3rem;"><i
-                        class="fas fa-play"></i></span><span class="subtitle has-text-white">MyTube</span>
+                <span class="logo is-size-7">
+                    <i class="fas fa-play"></i>
+                </span>
+                <span class="subtitle has-text-black ml-normal">MyTube</span>
             </a>
 
         </div>
@@ -33,7 +35,7 @@
                             <input class="input" type="text" placeholder="Search">
                         </div>
                         <div class="control">
-                            <button class="button is-light">
+                            <button class="button is-black">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -50,7 +52,7 @@
                             <img class="is-rounded" src="https://via.placeholder.com/32" style="max-height: none;">
                         </figure>
                     </a>
-                    <div class="navbar-dropdown is-right">
+                    <div class="navbar-dropdown is-right has-background-primary">
                         <div class="navbar-item">
                             <div class="columns is-multiline">
                                 <div class="column is-12">
@@ -59,8 +61,8 @@
                                     </figure>
                                 </div>
                                 <div class="column is-12 has-text-centered">
-                                    <div class="subtitle is-marginless">Pranav Sricharan</div>
-                                    <span class="has-text-primary">{{ user.videos.count }} videos</span>
+                                    <div class="subtitle is-marginless has-text-white">Pranav Sricharan</div>
+                                    <span class="has-text-black">{{ user.videos.count }} videos</span>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +86,7 @@
                 {% else %}
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a href="{% url 'account:login' %}" class="button is-primary">Login</a>
+                        <a href="{% url 'account:login' %}" class="button is-black">Login</a>
                         <a href="{% url 'account:register' %}" class="button is-white is-outlined">Register</a>
                     </div>
                 </div>

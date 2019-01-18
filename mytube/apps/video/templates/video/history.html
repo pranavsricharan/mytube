@@ -11,7 +11,7 @@
     {% with video=entry.video %}
             <div class="column is-3">
                 <div class="video-list-thumb">
-                    <a href="{% url 'video:watch' video.id %}" class="has-text-black">
+                    <a href="{% url 'video:watch' video.id %}">
 
                         {% if video.preview_thumb %}
                         <img src="{{ video.preview_thumb.url }}" />
@@ -26,16 +26,16 @@
                 </div>
             </div>
             <div class="column is-3">
-                <a href="{% url 'video:watch' video.id %}" class="has-text-black">
+                <a href="{% url 'video:watch' video.id %}" class="has-text-white">
                     <h3 class="video-list-title" title="{{ video.title }}">{{ video.title |truncatechars:60 }}</h3>
                 </a>
-                <a href="{% url 'video:channel' video.user.username %}" class="is-size-7 has-text-primary">
+                <a href="{% url 'video:channel' video.user.username %}" class="is-size-7 has-text-link">
                     {{video.user.username }}</a>
                     <div class="is-size-7 has-text-grey">
                         {{ video.views }} views
                     </div>
                     <div class="is-size-7">
-                        {{ video.description |truncatechars:120}}
+                        {{ video.description |truncatechars:100}}
                     </div>
             </div>
             {% endwith %}

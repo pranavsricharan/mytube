@@ -18,7 +18,7 @@
                 <div class="level-left">
                     <div class="level-item">
                         <div>
-                            <h1 class="subtitle mb-small">
+                            <h1 class="subtitle has-text-white mb-small">
                                 {{ video.title }}
                             </h1>
                             {{ video.views }} views
@@ -34,7 +34,7 @@
                                 <form action="{% url 'video:rate_video' video.pk %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="rating" value="LIKE" />
-                                    <button type="submit" class="button {% if rating == 'LIKE' %}is-info{% endif %}">
+                                    <button type="submit" class="button {% if rating != 'LIKE' %}is-dark{% else %}is-primary{% endif %}">
                                         <i class="{% if rating == 'LIKE' %}fas{% else %}far{% endif %} fa-thumbs-up"></i>
                                         <span class="ml-small">
                                             {% if like_count > 0 %}
@@ -49,7 +49,7 @@
                                 <form action="{% url 'video:rate_video' video.pk %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="rating" value="DISLIKE" />
-                                    <button class="button ml-small {% if rating == 'DISLIKE' %}is-danger{% endif %}">
+                                    <button class="button ml-small {% if rating != 'DISLIKE' %}is-dark{% else %}is-light{% endif %}">
                                         <i class="{% if rating == 'DISLIKE' %}fas{% else %}far{% endif %} fa-thumbs-down"></i>
                                         <span class="ml-small">
                                             {% if dislike_count > 0 %}
@@ -83,8 +83,8 @@
                     <div class="content">
                         <p>
                             <a href="{% url 'video:channel' video.user.username %}" class="has-text-primary"><strong>Pranav
-                                    Sricharan</strong> <small>
-                                    @{{video.user.username }}</small></a>
+                                    Sricharan</strong> 
+                                    <small class="has-text-link">@{{video.user.username }}</small></a>
                             <br>
                             <small class="has-text-grey">Published on {{ video.created|date:'Y-m-d'}}</small>
                         </p>
@@ -121,7 +121,7 @@
                                 <div class="level-left"></div>
                                 <div class="level-right">
                                     <div class="level-item">
-                                        <button type="submit" class="button is-link">Submit</a>
+                                        <button type="submit" class="button is-primary">Submit</a>
                                     </div>
                                 </div>
                             </nav>
@@ -145,7 +145,7 @@
                         <div class="media-content">
                             <div class="content">
                             <p>
-                                <strong>{{ comment.user.get_name }}</strong> <small>@{{ comment.user.get_username }}</small> <small>{{ comment.created | naturaltime }}</small>
+                                <strong class="has-text-primary">{{ comment.user.get_name }}</strong> <small class="has-text-link">@{{ comment.user.get_username }}</small> <small>{{ comment.created | naturaltime }}</small>
                                 <br>
                                 {{ comment.text | linebreaksbr }}
                             </p>

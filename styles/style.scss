@@ -1,12 +1,90 @@
-$primary: #e6744f;
-
+//$primary: #e6744f;
+$primary: #b62b2b;
+$accent: #dc4a32;
+$dark-main: #111;
 
 @import './bulma/bulma.sass';
 @import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 
+
+// Override Bulma styles
+body {
+    min-height: calc(100vh - 2.5rem);
+    background: $dark-main;
+    color: $grey-light;
+}
+
+hr {
+    height: 1px;
+    background-color: $grey-dark;
+}
+
+.logo {
+    padding: 6px 10px;
+    margin-right: 0.25rem;
+    border-radius: 1rem;
+    border-bottom-left-radius: 0;
+    background: $black;
+    border: 2px solid $accent;
+    color: $white;
+}
+
+.navbar {
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.navbar.is-primary .navbar-start > .navbar-item, .navbar.is-primary .navbar-start .navbar-link, .navbar.is-primary .navbar-end > .navbar-item, .navbar.is-primary .navbar-end .navbar-link {
+    color: $black;
+}
+
+.navbar.is-primary .navbar-start .navbar-link::after, .navbar.is-primary .navbar-end .navbar-link::after {
+    border-color: $black;
+}
+
+.label {
+    color: $white;
+}
+
+.input, .textarea {
+    //background: $grey-dark;
+}
+
 .level-item, .level-left, .level-right {
     flex-shrink: 1;
 }
+
+.menu-list {
+    a {
+        color: $grey;
+
+        &.is-active {
+            background: $primary;
+        }
+    }
+}
+
+
+.menu-label {
+    color: $white;
+}
+
+.navbar-dropdown {
+    border: 0;
+}
+
+.navbar-divider {
+    background-color: $accent;
+}
+
+.navbar-item, .navbar-link {
+    color: $black;
+}
+
+.subtitle {
+    color: $primary;
+}
+
+// End Bulma overriden styles
 
 .vspace {
     width: 100%;
@@ -71,6 +149,22 @@ $primary: #e6744f;
     &-0 {
         padding-top: 0 !important;
     }
+
+    &-small {
+        padding-top: 0.25rem !important;
+    }
+
+    &-normal {
+        padding-top: 0.5rem !important;
+    }
+
+    &-medium {
+        padding-top: 1rem !important;
+    }
+
+    &-large {
+        padding-top: 2rem !important;
+    }
 }
 
 .pl {
@@ -78,8 +172,8 @@ $primary: #e6744f;
         padding-left: 0 !important;
     }
 
-    &-small {
-        padding-left: 0.75rem !important;
+    &-normal {
+        padding-left: 0.5rem !important;
     }
 }
 
@@ -88,15 +182,17 @@ $primary: #e6744f;
         padding-right: 0 !important;
     }
 
-    &-small {
-        padding-right: 0.75rem !important;
+    &-normal {
+        padding-right: 0.5rem !important;
     }
 }
 
-
-body {
-    height: calc(100vh - 2.5rem);
+.p {
+    &-large {
+        padding: 2rem !important;
+    }
 }
+
 
 .menu-label {
     padding: 0 0.75rem;
@@ -138,7 +234,7 @@ body {
     }
 
     &-private {
-        background: $danger;
+        background: $primary;
     }
 }
 
@@ -155,9 +251,9 @@ body {
 .video-rating-bar {
     height: 5px;
     display: flex;
-    background: $danger;
+    background: $dark;
 
     &-like {
-        background: $success;
+        background: $link;
     }
 }

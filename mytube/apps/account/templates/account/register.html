@@ -1,12 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'base_no_sidebar.html' %}
 
 {% block title %}Register{% endblock title %}
 {% block content %}
-<form method="POST" class="column is-half">
+<h3 class="subtitle is-size-4">Login to your account</h3>
+<form method="POST" class="column is-4 has-background-primary p-large">
     {% csrf_token %}
     {% include 'form_template.html' with form=form %}
     <p class="control has-text-right">
-        <button class="button is-link" type="submit">Register</button>
+        <button class="button is-black" type="submit">Register</button>
     </p>
 </form>
 {% endblock %}
