@@ -62,6 +62,41 @@ class Video(models.Model):
     def increment_view_count(self):
         self.views = models.F('views') + 1
 
+    def rate_video(self, user: User, rating: str):
+        try:
+            # Update rating if already rated
+            video_rating = VideoRating.objects.get(video=self, user=user)
+            video_rating.rating = rating
+            video_rating.save()
+        except:
+            VideoRating(video=self, user=user, rating=rating).save()
+
+    def like_count(self):
+        return VideoRating.objects.filter(video=self, rating='LIKE').count()
+
+    def dislike_count(self):
+        return VideoRating.objects.filter(video=self, rating='DISLIKE').count()
+
+    def like_percentage(self):
+        like_count = self.like_count()
+        try:
+            return like_count / (like_count + self.dislike_count()) * 100
+        except ArithmeticError:
+            return 100
+
+    def user_rating(self, user, get_rating_object=False):
+        print(user)
+        try:
+            rating = VideoRating.objects.get(video=self, user=user)
+            if not get_rating_object:
+                rating = rating.rating
+            print(rating)
+            return rating
+        except:
+            import traceback
+            traceback.print_exc()
+            return None
+
     def __str__(self):
         return '<{}> {}'.format(self.id, self.title)
 
@@ -87,3 +122,11 @@ class History(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.user.username, self.video.id)
+
+
+class VideoRating(models.Model):
+    RATING = (('LIKE', 'Like'), ('DISLIKE', 'Dislike'))
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    video = models.ForeignKey(
+        Video, on_delete=models.CASCADE)
+    rating = models.CharField(max_length=7, choices=RATING, default='LIKE')

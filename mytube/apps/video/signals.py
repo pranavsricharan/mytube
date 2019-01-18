@@ -13,8 +13,6 @@ from .helpers import crop_to_aspect
 
 @receiver(post_save, sender=Video)
 def create_preview_thumb(sender, instance, created, **kwargs):
-    print('Generating thumbs')
-    print(created, bool(instance.preview_thumb), type(instance.preview_thumb))
     if created and bool(instance.preview_thumb) == False:
         with TemporaryDirectory() as temp_dir:
             system('ffprobe -i "{0}" -show_entries format=duration -v quiet -of csv="p=0" > {1}/tmp'.format(

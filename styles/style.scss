@@ -4,6 +4,10 @@ $primary: #e6744f;
 @import './bulma/bulma.sass';
 @import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 
+.level-item, .level-left, .level-right {
+    flex-shrink: 1;
+}
+
 .vspace {
     width: 100%;
     height: 1rem;
@@ -42,6 +46,24 @@ $primary: #e6744f;
 
     &-medium {
         margin-bottom: 1rem !important;
+    }
+}
+
+.ml {
+    &-0 {
+        margin-left: 0 !important;
+    }
+
+    &-small {
+        margin-left: 0.25rem !important;
+    }
+
+    &-normal {
+        margin-left: 0.5rem !important;
+    }
+
+    &-medium {
+        margin-left: 1rem !important;
     }
 }
 
@@ -117,5 +139,25 @@ body {
 
     &-private {
         background: $danger;
+    }
+}
+
+.rating-level {
+    flex-shrink: 0;
+}
+
+.rating-container {
+    form {
+        display: inline;
+    }
+}
+
+.video-rating-bar {
+    height: 5px;
+    display: flex;
+    background: $danger;
+
+    &-like {
+        background: $success;
     }
 }

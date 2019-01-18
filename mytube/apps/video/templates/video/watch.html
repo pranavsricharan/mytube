@@ -14,12 +14,63 @@
 <section class="section container is-fluid" style="padding-top: 0.5rem;">
     <div class="columns">
         <div class="column is-9">
-            <h1 class="subtitle mb-small">
-                {{ video.title }}
-            </h1>
             <div class="level">
-                <div class="level-left">{{ video.views }} views</div>
-                <div class="level-right"></div>
+                <div class="level-left">
+                    <div class="level-item">
+                        <div>
+                            <h1 class="subtitle mb-small">
+                                {{ video.title }}
+                            </h1>
+                            {{ video.views }} views
+                        </div>
+                    </div>
+                </div>
+                <div class="level-right rating-level">
+                    <div class="level-item">
+                        {% with like_count=video.like_count dislike_count=video.dislike_count %}
+                        <div class="rating-container">
+                            {% user_rating video user as rating %}
+                            {{ user_rating }}
+                                <form action="{% url 'video:rate_video' video.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="rating" value="LIKE" />
+                                    <button type="submit" class="button {% if rating == 'LIKE' %}is-info{% endif %}">
+                                        <i class="{% if rating == 'LIKE' %}fas{% else %}far{% endif %} fa-thumbs-up"></i>
+                                        <span class="ml-small">
+                                            {% if like_count > 0 %}
+                                                {{ like_count }}
+                                            {% else %}
+                                                Like
+                                            {% endif %}
+                                        </span>
+                                    </button>
+                                </form>
+
+                                <form action="{% url 'video:rate_video' video.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="rating" value="DISLIKE" />
+                                    <button class="button ml-small {% if rating == 'DISLIKE' %}is-danger{% endif %}">
+                                        <i class="{% if rating == 'DISLIKE' %}fas{% else %}far{% endif %} fa-thumbs-down"></i>
+                                        <span class="ml-small">
+                                            {% if dislike_count > 0 %}
+                                                {{ dislike_count }}
+                                            {% else %}
+                                                Dislike
+                                            {% endif %}
+                                        </span>
+                                    </button>
+                                </form>
+
+                            <br />
+                            {% if like_count != 0 or dislike_count != 0 %}
+                            <div class="video-rating-bar mt-small">
+                                <div class="video-rating-bar-like" style="width: {{ video.like_percentage }}%"></div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endwith %}
+                    </div>
+                </div>
             </div>
             <hr />
             <article class="media">

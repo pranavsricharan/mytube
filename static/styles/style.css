@@ -8949,6 +8949,10 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
+.level-item, .level-left, .level-right {
+  flex-shrink: 1;
+}
+
 .vspace {
   width: 100%;
   height: 1rem;
@@ -8978,6 +8982,19 @@ label.panel-block:hover {
 }
 .mb-medium {
   margin-bottom: 1rem !important;
+}
+
+.ml-0 {
+  margin-left: 0 !important;
+}
+.ml-small {
+  margin-left: 0.25rem !important;
+}
+.ml-normal {
+  margin-left: 0.5rem !important;
+}
+.ml-medium {
+  margin-left: 1rem !important;
 }
 
 .pt-0 {
@@ -9041,6 +9058,23 @@ body {
 }
 .video-thumb-tag-private {
   background: #ff3860;
+}
+
+.rating-level {
+  flex-shrink: 0;
+}
+
+.rating-container form {
+  display: inline;
+}
+
+.video-rating-bar {
+  height: 5px;
+  display: flex;
+  background: #ff3860;
+}
+.video-rating-bar-like {
+  background: #23d160;
 }
 
 /*# sourceMappingURL=style.css.map */

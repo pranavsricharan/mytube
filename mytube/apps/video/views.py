@@ -1,14 +1,15 @@
 import datetime
 
-from django.shortcuts import render, reverse, get_object_or_404, Http404
+from django.shortcuts import render, reverse, get_object_or_404, Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-from .models import Video, Comment, History
+from .models import Video, Comment, History, VideoRating
 
 
 def index(*args, **kwargs):
@@ -55,8 +56,6 @@ class VideoDetailView(DetailView):
 
             # Create new entry in user history
             try:
-                print('*' * 100)
-                print(type(video_object))
                 user_last_viewed_video: History = History.objects.get(
                     user=self.request.user, video=video_object)
                 user_last_viewed_video.watched_time = datetime.datetime.now()
@@ -130,6 +129,38 @@ class AddCommentView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('video:watch', args=(self.video.pk,))
+
+
+@login_required(login_url=reverse_lazy('account:login'))
+def rate_video(request, pk):
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+
+        if rating not in ['LIKE', 'DISLIKE']:
+            rating = 'LIKE'
+
+        video: Video = get_object_or_404(
+            Video, id=pk, visibility__in=['PUBLIC', 'UNLISTED'])
+        video_rating = video.user_rating(request.user, get_rating_object=True)
+
+        if video_rating is not None:
+            # If user has already rated the video delete the previously
+            # rated item
+
+            if video_rating.rating != rating:
+                # Create new rating only if the previously rated value
+                # is not being toggled
+
+                VideoRating(user=request.user, video=video,
+                            rating=rating).save()
+
+            video_rating.delete()
+        else:
+            VideoRating(user=request.user, video=video, rating=rating).save()
+
+        return HttpResponseRedirect(reverse('video:watch', kwargs={'pk': video.pk}))
+
+    raise Http404
 
 
 class HistoryListView(LoginRequiredMixin, ListView):

@@ -19,6 +19,11 @@ def get_duration(seconds):
         return '--:--'
 
 
+@register.simple_tag
+def user_rating(video, user):
+    return video.user_rating(user)
+
+
 @register.filter(name='format_text')
 def format_text(text):
     return URL_PATTERN.sub(r'<a href="\1" target="_blank">\1</a>', text)
