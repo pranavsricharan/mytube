@@ -12,4 +12,11 @@ urlpatterns = [
     path('new', views.AddVideoView.as_view(), name='add'),
     path('history', views.HistoryListView.as_view(), name='history'),
     path('u/<str:username>', views.UserVideoListView.as_view(), name='channel'),
+    path('u/<str:username>/playlists',
+         views.PlaylistListView.as_view(), name='playlists'),
+    path('p/add', views.add_to_playlist, name='playlist_add'),
+    path('p/<pk>', views.PlaylistDetailView.as_view(), name='playlist_detail'),
+    path('watch-later', views.WatchLaterListView.as_view(), name='watch_later'),
+    path('favourites', views.FavouritesListView.as_view(), name='favourites'),
+
 ]

@@ -6,8 +6,9 @@ from PIL import Image
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.files import File
+from django.contrib.auth.models import User
 
-from .models import Video
+from .models import Video, Playlist
 from .helpers import crop_to_aspect
 
 
@@ -37,3 +38,17 @@ def create_preview_thumb(sender, instance, created, **kwargs):
                 django_file = File(f)
                 instance.preview_thumb = django_file
                 instance.save()
+
+
+@receiver(signal=post_save, sender=User)
+def create_default_playlists(sender, instance, created, **kwargs):
+    try:
+        # User updation
+        Playlist.objects.get(name='Watch later',
+                             deletable=False, user=instance)
+    except:
+        # User creation
+        Playlist(name='Watch later', deletable=False,
+                 user=instance, visibility='PRIVATE').save()
+        Playlist(name='Favourites', deletable=False,
+                 user=instance, visibility='PRIVATE').save()

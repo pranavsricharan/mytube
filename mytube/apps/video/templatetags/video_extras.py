@@ -1,7 +1,9 @@
-from django import template
-from datetime import timedelta
 import re
 
+from django import template
+from datetime import timedelta
+
+from ..models import Playlist, PlaylistVideoMapping
 
 URL_PATTERN = re.compile(r'(https?://[^\s]+)')
 register = template.Library()
@@ -22,6 +24,32 @@ def get_duration(seconds):
 @register.simple_tag
 def user_rating(video, user):
     return video.user_rating(user)
+
+
+@register.simple_tag
+def user_watch_later_id(user):
+    try:
+        return Playlist.objects.get(name='Watch later', user=user, deletable=False).id
+    except:
+        return None
+
+
+@register.simple_tag
+def user_favourites_id(user):
+    try:
+        return Playlist.objects.get(name='Favourites', user=user, deletable=False).id
+    except:
+        return None
+
+
+@register.simple_tag
+def is_in_playlist(video, playlist):
+    try:
+        PlaylistVideoMapping.objects.get(
+            video__id=video, playlist__id=playlist)
+        return True
+    except:
+        return False
 
 
 @register.filter(name='format_text')

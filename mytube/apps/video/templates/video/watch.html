@@ -27,6 +27,36 @@
                 </div>
                 <div class="level-right rating-level">
                     <div class="level-item">
+                        <div class="rating-container">
+                            <form method="POST" action="{% url 'video:playlist_add' %}">
+                                {% csrf_token %}
+                                {% user_watch_later_id user as watch_later_playlist %}
+                                <input type="hidden" name="playlist_pk" value="{{ watch_later_playlist }}" />
+                                <input type="hidden" name="video_pk" value="{{ video.id }}" />
+                                {% is_in_playlist video.id watch_later_playlist as in_playlist %}
+                                <button title="Watch later" class="button {% if in_playlist %}is-primary{% else %}is-dark{% endif %} is-small">
+                                    <i class="fas fa-clock"></i>
+                                </button>
+                            </form>
+
+                            <form method="POST" action="{% url 'video:playlist_add' %}">
+                                {% csrf_token %}
+                                {% user_favourites_id user as favourites_playlist %}
+                                <input type="hidden" name="playlist_pk" value="{{ favourites_playlist }}" />
+                                <input type="hidden" name="video_pk" value="{{ video.id }}" />
+                                {% is_in_playlist video.id favourites_playlist as in_playlist %}
+                                <button title="Add to favourites" class="button {% if in_playlist %}is-primary{% else %}is-dark{% endif %} is-small">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </form>
+                            <button title="Save to list" class="button is-dark is-small" id="add-to-playlist-btn">
+                                <i class="fas fa-folder-plus"></i>
+                                <span class="ml-small">Save</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="level-item">
                         {% with like_count=video.like_count dislike_count=video.dislike_count %}
                         <div class="rating-container">
                             {% user_rating video user as rating %}
@@ -34,7 +64,7 @@
                                 <form action="{% url 'video:rate_video' video.pk %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="rating" value="LIKE" />
-                                    <button type="submit" class="button {% if rating != 'LIKE' %}is-dark{% else %}is-primary{% endif %}">
+                                    <button type="submit" class="button is-small {% if rating != 'LIKE' %}is-dark{% else %}is-primary{% endif %}">
                                         <i class="{% if rating == 'LIKE' %}fas{% else %}far{% endif %} fa-thumbs-up"></i>
                                         <span class="ml-small">
                                             {% if like_count > 0 %}
@@ -49,7 +79,7 @@
                                 <form action="{% url 'video:rate_video' video.pk %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="rating" value="DISLIKE" />
-                                    <button class="button ml-small {% if rating != 'DISLIKE' %}is-dark{% else %}is-light{% endif %}">
+                                    <button class="button ml-small is-small {% if rating != 'DISLIKE' %}is-dark{% else %}is-light{% endif %}">
                                         <i class="{% if rating == 'DISLIKE' %}fas{% else %}far{% endif %} fa-thumbs-down"></i>
                                         <span class="ml-small">
                                             {% if dislike_count > 0 %}
@@ -168,4 +198,69 @@
         </div>
     </div>
 </section>
+
+<div id="playlist-modal" class="modal">
+    <div id="playlist-modal-background" class="modal-background"></div>
+    <div class="modal-content" style="overflow-x: hidden; max-width: 500px;">
+        <div class="box has-background-dark">
+            <form class="columns is-multiline has-background-black" action="{% url 'video:playlist_add' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="video_pk" value="{{ video.id }}" />
+                <label class="label column is-12 is-size-7 pb-0 mb-0">Create new playlist</label>
+                <div class="column is-6">
+                    <input name="name" class="input is-small" type="text" placeholder="New playlist" />
+                </div>
+                <div class="column">
+                    <div class="select is-small">
+                        <select name="visibility">
+                            <option value="PUBLIC">Public</option>
+                            <option value="PRIVATE">Private</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="column has-text-right"><button class="button is-small is-primary">Create</button></div>
+            </form>
+            <div class="p-large columns is-multiline has-background-primary has-text-white">
+                {% for playlist in playlists %}
+                <div class="column is-8 pt-0 pb-0">{{ playlist.name }}</div>
+                <div class="column is-4 has-text-right pt-0 pb-0">
+                    <form action="{% url 'video:playlist_add' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="playlist_pk" value="{{ playlist.id }}" />
+                        <input type="hidden" name="video_pk" value="{{ video.id }}" />
+                        {% if playlist.has_video %}
+                            <button class="button is-text has-text-black is-small">Remove</button>
+                        {% else %}
+                            <button class="button is-black is-small">Add</button>
+                        {% endif %}
+                    </form>
+                </div>
+    
+                {% endfor %}
+            
+            </div>
+            
+        </div>
+    </div>
+    <button id="playlist-modal-close" class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<script>
+    var playlistModal = document.getElementById("playlist-modal");
+
+    document.getElementById("add-to-playlist-btn").addEventListener("click", function(e) {
+        playlistModal.classList.add("is-active");
+    });
+
+    function _closeModal(e, modal) {
+        modal.classList.remove('is-active');
+    }
+
+    function closeAddToPlaylist(e) {
+        _closeModal(e, playlistModal);
+    }
+
+    document.getElementById("playlist-modal-close").addEventListener("click", closeAddToPlaylist);
+    document.getElementById("playlist-modal-background").addEventListener("click", closeAddToPlaylist);
+</script>
 {% endblock %}

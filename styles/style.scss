@@ -125,6 +125,10 @@ hr {
     &-medium {
         margin-bottom: 1rem !important;
     }
+
+    &-large {
+        margin-bottom: 2rem !important;
+    }
 }
 
 .ml {
@@ -188,6 +192,9 @@ hr {
 }
 
 .p {
+    &-small {
+        padding: 0.25rem !important;
+    }
     &-large {
         padding: 2rem !important;
     }
@@ -240,6 +247,11 @@ hr {
 
 .rating-level {
     flex-shrink: 0;
+    align-self: flex-start;
+
+    .level-item {
+        align-self: flex-start;
+    }
 }
 
 .rating-container {
@@ -249,7 +261,7 @@ hr {
 }
 
 .video-rating-bar {
-    height: 5px;
+    height: 3px;
     display: flex;
     background: $dark;
 

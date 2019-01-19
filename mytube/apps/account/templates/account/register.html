@@ -2,7 +2,7 @@
 
 {% block title %}Register{% endblock title %}
 {% block content %}
-<h3 class="subtitle is-size-4">Login to your account</h3>
+<h3 class="subtitle is-size-4">Create an account</h3>
 <form method="POST" class="column is-4 has-background-primary p-large">
     {% csrf_token %}
     {% include 'form_template.html' with form=form %}

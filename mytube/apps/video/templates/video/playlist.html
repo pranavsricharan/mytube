@@ -1,0 +1,92 @@
+{% extends 'base_no_padding.html' %}
+{% load humanize %}
+{% load video_extras %}
+{% block title %}Playlists of {{ channel_user.username }}{% endblock %}
+{% block content %}
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image is-128x128" style="margin: auto;">
+                        <img class="is-rounded" src="https://via.placeholder.com/128" style="max-height: none;">
+                    </figure>
+                </div>
+
+                <div class="column">
+                    <h1 class="title">
+                        {{ channel_user.username }}
+                    </h1>
+                    <h2 class="subtitle">
+                        Playlists
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="section">
+    {% for playlist in playlists %}
+    <div class="mb-large">
+        <a href="{% url 'video:playlist_detail' playlist.id %}" class="subtitle has-text-white">{{ playlist.name }}</a>
+        <p class="is-size-7 mb-medium">{{ playlist.length }} videos</p>
+
+        <div class="columns is-multiline">
+            {% for video in playlist.get_videos %}
+            <div class="column is-3">
+                <div class="video-list-thumb">
+                    <a href="{% url 'video:watch' video.id %}">
+
+                        {% if video.preview_thumb %}
+                        <img src="{{ video.preview_thumb.url }}" />
+                        {% else %}
+                        <img src="https://via.placeholder.com/320x180" />
+                        {% endif %}
+                    </a>
+
+                    <div class="video-thumb-duration">
+                        {% get_duration video.duration %}
+                    </div>
+                    {% if video.visibility == "UNLISTED" %}
+                    <div class="video-thumb-tag video-thumb-tag-unlisted">
+                        Unlisted
+                    </div>
+                    {% endif %}
+
+                    {% if video.visibility == "PRIVATE" %}
+                    <div class="video-thumb-tag video-thumb-tag-private">
+                        Private
+                    </div>
+                    {% endif %}
+                </div>
+                <div>
+                    <a href="{% url 'video:watch' video.id %}" class="has-text-white">
+                        <h3 class="video-list-title" title="{{ video.title }}">{{ video.title |truncatechars:60 }}</h3>
+                    </a>
+                    <div class="is-size-7 has-text-link">{{ video.user.username }}</div>
+                    <div class="is-size-7 has-text-grey level">
+                        <span class="level-left">
+                            <span class="level-item">
+                                {{ video.created|naturaltime }}
+                            </span>
+                        </span>
+                        <span class="level-right">
+                            <span class="level-item">
+                                {{ video.views }} views
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        <div class="is-size-7 has-text-right">
+            <a href="{% url 'video:playlist_detail' playlist.id %}" class="is-size-7 has-text-right">View playlist</a>
+        </div>
+        <hr />
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

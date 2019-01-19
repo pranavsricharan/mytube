@@ -1,7 +1,7 @@
 {% extends 'skeleton.html' %}
 
 {% block body %}
-<div class="columns" style="min-height: 100%;">
+<div class="columns" style="min-height: calc(100vh - 3.25rem);">
     <div class="column is-2 section pl-normal pr-0 has-background-black">
         <aside class="menu">
             <ul class="menu-list">
@@ -15,15 +15,36 @@
                 <li>
                     <a>
                         <span class="icon">
-                            <i class="fas fa-clock"></i>
-                        </span> Recently Uploaded
+                            <i class="fas fa-star"></i>
+                        </span> Popular
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="{% url 'video:history' %}">
                         <span class="icon">
-                            <i class="fas fa-star"></i>
-                        </span> Popular
+                            <i class="fas fa-history"></i>
+                        </span> History
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'video:watch_later' %}">
+                        <span class="icon">
+                            <i class="fas fa-clock"></i>
+                        </span> Watch later
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'video:favourites' %}">
+                        <span class="icon">
+                            <i class="fas fa-heart"></i>
+                        </span> Favourites
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'video:playlists' user.username %}">
+                        <span class="icon">
+                            <i class="fas fa-folder"></i>
+                        </span> Playlists
                     </a>
                 </li>
             </ul>
