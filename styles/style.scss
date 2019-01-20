@@ -2,9 +2,11 @@
 $primary: #b62b2b;
 $accent: #dc4a32;
 $dark-main: #111;
+$family-primary: 'Roboto', sans-serif;
 
 @import './bulma/bulma.sass';
 @import url('https://use.fontawesome.com/releases/v5.6.3/css/all.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
 
 // Override Bulma styles
