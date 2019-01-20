@@ -71,12 +71,13 @@ class VideoDetailView(DetailView):
 
         playlists = []
 
-        for playlist in Playlist.objects.filter(user=self.request.user).order_by('deletable'):
-            playlists.append({
-                'id': playlist.id,
-                'name': playlist.name,
-                'has_video': playlist.has_video(context_data['video'])
-            })
+        if self.request.user.is_authenticated:
+            for playlist in Playlist.objects.filter(user=self.request.user).order_by('deletable'):
+                playlists.append({
+                    'id': playlist.id,
+                    'name': playlist.name,
+                    'has_video': playlist.has_video(context_data['video'])
+                })
 
         context_data['playlists'] = playlists
         return context_data
@@ -260,6 +261,7 @@ class FavouritesListView(LoginRequiredMixin, PlaylistDetailView):
         return super(FavouritesListView, self).dispatch(*args, **kwargs)
 
 
+@login_required(login_url=reverse_lazy('account:login'))
 def add_to_playlist(request):
     if request.method == 'POST':
         video_pk = request.POST.get('video_pk')

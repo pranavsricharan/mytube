@@ -49,10 +49,17 @@
                                     <i class="fas fa-heart"></i>
                                 </button>
                             </form>
+                            {% if user.is_authenticated %}
                             <button title="Save to list" class="button is-dark is-small" id="add-to-playlist-btn">
                                 <i class="fas fa-folder-plus"></i>
                                 <span class="ml-small">Save</span>
                             </button>
+                            {% else %}
+                            <a href="{% url 'account:login'%}" title="Save to list" class="button is-dark is-small">
+                                <i class="fas fa-folder-plus"></i>
+                                <span class="ml-small">Save</span>
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
 

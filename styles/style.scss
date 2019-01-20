@@ -60,7 +60,11 @@ hr {
         &.is-active {
             background: $primary;
         }
+        .icon {
+            margin-right: 1rem;
+        }
     }
+
 }
 
 

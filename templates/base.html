@@ -19,6 +19,7 @@
                         </span> Popular
                     </a>
                 </li>
+                {% if user.is_authenticated %}
                 <li>
                     <a href="{% url 'video:history' %}">
                         <span class="icon">
@@ -47,6 +48,7 @@
                         </span> Playlists
                     </a>
                 </li>
+                {% endif %}
             </ul>
             <p class="menu-label">
                 Subscriptions
