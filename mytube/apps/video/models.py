@@ -128,5 +128,5 @@ class VideoRating(models.Model):
     RATING = (('LIKE', 'Like'), ('DISLIKE', 'Dislike'))
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     video = models.ForeignKey(
-        Video, on_delete=models.CASCADE)
+        Video, on_delete=models.CASCADE, related_name='video_rating')
     rating = models.CharField(max_length=7, choices=RATING, default='LIKE')

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum, FloatField, Case, When
 
 from mytube.apps.video.models import Video, History, VideoRating
 
@@ -42,6 +43,7 @@ class AuthRequiredVideoListView(LoginRequiredMixin, VideoListView):
         result = [x.video for x in objects]
         return result
 
+
 class HistoryListView(AuthRequiredVideoListView):
     '''
     List the user's history
@@ -60,11 +62,29 @@ class LikedVideosListView(AuthRequiredVideoListView):
 
 class MostViewedListView(VideoListView):
     '''
-    List the user's liked videos
+    List the most viewed videos
     '''
     list_title = 'Most Viewed'
     model = Video
 
     def get_queryset(self):
         return self.model.objects.all().order_by('-views')
-    
+
+
+class TopRatedListView(VideoListView):
+    '''
+    List the user's liked videos
+    '''
+    list_title = 'Top Rated'
+    model = Video
+
+    def get_queryset(self):
+        return Video.objects.all().annotate(
+            count=Sum(
+                Case(
+                    When(video_rating__rating='LIKE', then=1),
+                    When(video_rating__rating='DISLIKE', then=-0.33),
+                    default=0,
+                ), output_field=FloatField()
+            )
+        ).order_by('-count')
