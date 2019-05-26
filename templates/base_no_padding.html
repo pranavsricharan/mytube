@@ -4,6 +4,9 @@
 <div class="columns" style="min-height: calc(100vh - 3.25rem);">
     <div class="column is-2 section pl-normal pr-0 has-background-black">
         <aside class="menu">
+            <p class="menu-label">
+                Explore
+            </p>
             <ul class="menu-list">
                 <li>
                     <a class="is-active">
@@ -13,12 +16,24 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="{% url 'feed:most-viewed' %}">
+                        <span class="icon">
+                            <i class="fas fa-eye"></i>
+                        </span> Most viewed
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'feed:top' %}">
                         <span class="icon">
                             <i class="fas fa-star"></i>
                         </span> Popular
                     </a>
                 </li>
+            </ul>
+            <p class="menu-label">
+                Manage
+            </p>
+            <ul class="menu-list">
                 {% if user.is_authenticated %}
                 <li>
                     <a href="{% url 'feed:history' %}">
