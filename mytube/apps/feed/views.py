@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from mytube.apps.video.models import Video, History
+from mytube.apps.video.models import Video, History, VideoRating
 
 
 class VideoListView(ListView):
@@ -31,6 +31,23 @@ class HistoryListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('account:login')
     model = History
     template_name = 'feed/history.html'
+    context_object_name = 'entries'
+
+    def get_queryset(self):
+        '''
+        Custom queryset to fetch user's history
+        '''
+
+        return self.model.objects.filter(user=self.request.user)
+
+class LikedVideosListView(LoginRequiredMixin, ListView):
+    '''
+    List the most recent public videos
+    '''
+
+    login_url = reverse_lazy('account:login')
+    model = VideoRating
+    template_name = 'feed/liked.html'
     context_object_name = 'entries'
 
     def get_queryset(self):
