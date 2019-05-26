@@ -12,27 +12,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Video, Comment, History, VideoRating, Playlist, PlaylistVideoMapping
 
 
-def index(*args, **kwargs):
-    return VideoListView.as_view()(*args, **kwargs)
-
-
-class VideoListView(ListView):
-    '''
-    List the most recent public videos
-    '''
-
-    model = Video
-    template_name = 'video/list.html'
-    context_object_name = 'videos'
-
-    def get_queryset(self):
-        '''
-        Custom queryset to fetch only public videos
-        '''
-
-        return self.model.objects.filter(visibility='PUBLIC').order_by('-created')
-
-
 class VideoDetailView(DetailView):
     '''
     Watch video page
@@ -147,25 +126,6 @@ def rate_video(request, pk):
         return HttpResponseRedirect(reverse('video:watch', kwargs={'pk': video.pk}))
 
     raise Http404
-
-
-class HistoryListView(LoginRequiredMixin, ListView):
-    '''
-    List the most recent public videos
-    '''
-
-    login_url = reverse_lazy('account:login')
-    model = History
-    template_name = 'video/history.html'
-    context_object_name = 'entries'
-
-    def get_queryset(self):
-        '''
-        Custom queryset to fetch user's history
-        '''
-
-        return self.model.objects.filter(user=self.request.user)
-
 
 
 class PlaylistDetailView(ListView):

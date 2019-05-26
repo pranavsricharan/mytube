@@ -16,7 +16,7 @@ def login(request):
             print('user', user)
             if user is not None:
                 auth.login(request, user)
-                return redirect(reverse('video:index'))
+                return redirect(reverse('feed:index'))
 
     return render(request, 'account/login.html', {'form': form})
 
@@ -35,4 +35,4 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect(reverse('video:index'))
+    return redirect(reverse('feed:index'))
