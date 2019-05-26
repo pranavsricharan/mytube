@@ -28,7 +28,7 @@
                 <div class="level-right rating-level">
                     <div class="level-item">
                         <div class="rating-container">
-                            <form method="POST" action="{% url 'video:playlist_add' %}">
+                            <form method="POST" action="{% url 'playlist:add' %}">
                                 {% csrf_token %}
                                 {% user_watch_later_id user as watch_later_playlist %}
                                 <input type="hidden" name="playlist_pk" value="{{ watch_later_playlist }}" />
@@ -39,7 +39,7 @@
                                 </button>
                             </form>
 
-                            <form method="POST" action="{% url 'video:playlist_add' %}">
+                            <form method="POST" action="{% url 'playlist:add' %}">
                                 {% csrf_token %}
                                 {% user_favourites_id user as favourites_playlist %}
                                 <input type="hidden" name="playlist_pk" value="{{ favourites_playlist }}" />
@@ -210,7 +210,7 @@
     <div id="playlist-modal-background" class="modal-background"></div>
     <div class="modal-content" style="overflow-x: hidden; max-width: 500px;">
         <div class="box has-background-dark">
-            <form class="columns is-multiline has-background-black" action="{% url 'video:playlist_add' %}" method="POST">
+            <form class="columns is-multiline has-background-black" action="{% url 'playlist:add' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="video_pk" value="{{ video.id }}" />
                 <label class="label column is-12 is-size-7 pb-0 mb-0">Create new playlist</label>
@@ -231,7 +231,7 @@
                 {% for playlist in playlists %}
                 <div class="column is-8 pt-0 pb-0">{{ playlist.name }}</div>
                 <div class="column is-4 has-text-right pt-0 pb-0">
-                    <form action="{% url 'video:playlist_add' %}" method="POST">
+                    <form action="{% url 'playlist:add' %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="playlist_pk" value="{{ playlist.id }}" />
                         <input type="hidden" name="video_pk" value="{{ video.id }}" />

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mytube.apps.account',
     'mytube.apps.video',
     'mytube.apps.channel',
+    'mytube.apps.playlist',
     'mytube.apps.feed',
 ]
 

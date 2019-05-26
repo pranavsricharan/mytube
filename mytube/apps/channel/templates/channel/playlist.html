@@ -28,7 +28,7 @@
 <div class="section">
     {% for playlist in playlists %}
     <div class="mb-large">
-        <a href="{% url 'video:playlist_detail' playlist.id %}" class="subtitle has-text-white">{{ playlist.name }}</a>
+        <a href="{% url 'playlist:detail' playlist.id %}" class="subtitle has-text-white">{{ playlist.name }}</a>
         <p class="is-size-7 mb-medium">{{ playlist.length }} videos</p>
 
         <div class="columns is-multiline">
@@ -82,7 +82,7 @@
             {% endfor %}
         </div>
         <div class="is-size-7 has-text-right">
-            <a href="{% url 'video:playlist_detail' playlist.id %}" class="is-size-7 has-text-right">View playlist</a>
+            <a href="{% url 'playlist:detail' playlist.id %}" class="is-size-7 has-text-right">View playlist</a>
         </div>
         <hr />
     </div>

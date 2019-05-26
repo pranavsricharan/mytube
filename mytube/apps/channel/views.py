@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.contrib.auth.models import User
 
-from mytube.apps.video.models import Video, Playlist
+from mytube.apps.video.models import Video
+from mytube.apps.playlist.models import Playlist
 
 class UserVideoListView(ListView):
     '''

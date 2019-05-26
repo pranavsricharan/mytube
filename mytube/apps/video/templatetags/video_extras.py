@@ -3,7 +3,7 @@ import re
 from django import template
 from datetime import timedelta
 
-from ..models import Playlist, PlaylistVideoMapping
+from mytube.apps.playlist.models import Playlist, PlaylistVideoMapping
 
 URL_PATTERN = re.compile(r'(https?://[^\s]+)')
 register = template.Library()
