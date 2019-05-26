@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mytube.apps.video.urls', namespace='video')),
+    path('u/', include('mytube.apps.channel.urls', namespace='channel')),
     path('account/', include('mytube.apps.account.urls', namespace='account')),
 ]
 

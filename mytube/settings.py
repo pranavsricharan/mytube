@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'mytube.apps.account',
     'mytube.apps.video',
+    'mytube.apps.channel',
 ]
 
 MIDDLEWARE = [

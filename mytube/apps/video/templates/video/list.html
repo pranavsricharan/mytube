@@ -25,7 +25,7 @@
                 <a href="{% url 'video:watch' video.id %}" class="has-text-white">
                     <h3 class="video-list-title" title="{{ video.title }}">{{ video.title |truncatechars:60 }}</h3>
                 </a>
-                <a href="{% url 'video:channel' video.user.username %}" class="is-size-7">
+                <a href="{% url 'channel:index' video.user.username %}" class="is-size-7">
                     {{video.user.username }}</a>
                 <div class="is-size-7 has-text-grey level">
                     <span class="level-left">

@@ -99,36 +99,6 @@ class AddVideoView(LoginRequiredMixin, CreateView):
         return reverse('video:watch', args=(self.object.pk,))
 
 
-class UserVideoListView(ListView):
-    '''
-    - List the public videos of any user
-    - List all the videos of the logged in user
-    '''
-
-    model = Video
-    template_name = 'video/channel.html'
-    context_object_name = 'videos'
-
-    def get_queryset(self):
-        '''
-        Custom queryset to fetch only public videos
-        '''
-
-        username = self.kwargs.get('username')
-        if self.request.user.username == username:
-            self.user = self.request.user
-            return self.model.objects.filter(user=self.request.user).order_by('-created')
-
-        self.user = get_object_or_404(User, username=username)
-        return self.model.objects.filter(user=self.user, visibility='PUBLIC').order_by('-created')
-
-    def get_context_data(self, *args, **kwargs):
-        context_data = super(
-            UserVideoListView, self).get_context_data(*args, **kwargs)
-        context_data['channel_user'] = self.user
-        return context_data
-
-
 class AddCommentView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('account:login')
     model = Comment
@@ -196,19 +166,6 @@ class HistoryListView(LoginRequiredMixin, ListView):
 
         return self.model.objects.filter(user=self.request.user)
 
-
-class PlaylistListView(UserVideoListView):
-    model = Playlist
-    context_object_name = 'playlists'
-    template_name = 'video/playlist.html'
-
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        self.user = user
-        if self.request.user.id == user.id:
-            return Playlist.objects.filter(user=self.request.user)
-
-        return Playlist.objects.filter(user=user, visibility='PUBLIC')
 
 
 class PlaylistDetailView(ListView):
