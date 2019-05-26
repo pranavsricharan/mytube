@@ -7,8 +7,8 @@
 <div class="container is-fluid">
     <div class="subtitle">{{ list_title }}</div>
     <div class="columns is-multiline">
-    {% for entry in entries %}
-    {% with video=entry.video %}
+    {% for video in entries %}
+
             <div class="column is-3">
                 <div class="video-list-thumb">
                     <a href="{% url 'video:watch' video.id %}">
@@ -38,7 +38,7 @@
                         {{ video.description |truncatechars:100}}
                     </div>
             </div>
-            {% endwith %}
+
             {% endfor %}
         </div>
 </div>

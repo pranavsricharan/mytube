@@ -38,11 +38,9 @@ class AuthRequiredVideoListView(LoginRequiredMixin, VideoListView):
     login_url = reverse_lazy('account:login')
 
     def get_queryset(self):
-        '''
-        Custom queryset to fetch user's history
-        '''
-
-        return self.model.objects.filter(user=self.request.user)
+        objects = self.model.objects.filter(user=self.request.user)
+        result = [x.video for x in objects]
+        return result
 
 class HistoryListView(AuthRequiredVideoListView):
     '''
@@ -58,4 +56,15 @@ class LikedVideosListView(AuthRequiredVideoListView):
     '''
     list_title = 'Liked Videos'
     model = VideoRating
+
+
+class MostViewedListView(VideoListView):
+    '''
+    List the user's liked videos
+    '''
+    list_title = 'Most Viewed'
+    model = Video
+
+    def get_queryset(self):
+        return self.model.objects.all().order_by('-views')
     
